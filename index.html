@@ -30,7 +30,7 @@
         .icon-container {
             position: relative;
             width: 100vw;
-            height: 60vh;
+            height: 70vh;
         }
         .icon {
             width: 100px;
@@ -111,7 +111,10 @@
             icon.appendChild(img);
             iconContainer.appendChild(icon);
 
-            icon.addEventListener("click", () => {
+            let clicked = false;
+        icon.addEventListener("click", () => {
+            if (clicked) return;
+            clicked = true;
                 if (icon.classList.contains("clicked")) return;
                 icon.classList.add("clicked");
                 img.classList.add("explosion");
