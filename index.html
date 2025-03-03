@@ -68,11 +68,6 @@
             border-top: 2px solid #ff69b4;
             text-align: center;
         }
-        .coupon {
-            font-size: 1.2rem;
-            color: #ff1493;
-            margin-top: 10px;
-        }
     </style>
 </head>
 <body>
@@ -106,37 +101,70 @@
         }
         
         const iconContainer = document.getElementById("iconContainer");
-        let gameClicked = false;
+        const positions = [];
         selectedIcons.forEach(iconSrc => {
             let icon = document.createElement("div");
             icon.classList.add("icon");
-            icon.style.left = (Math.random() * 50 + 25) + "vw";
+            let left, top;
+        do {
+            left = Math.random() * 50 + 25;
+            top = Math.random() * 30 + 10;
+        } while (positions.some(pos => Math.abs(pos.left - left) < 10 && Math.abs(pos.top - top) < 10));
+        positions.push({ left, top });
+        icon.style.left = left + "vw";
+        icon.style.top = top + "vh";
             icon.style.top = (Math.random() * 30 + 10) + "vh";
             let img = document.createElement("img");
             img.src = iconSrc;
             icon.appendChild(img);
             iconContainer.appendChild(icon);
 
-            icon.addEventListener("click", () => {
-                if (gameClicked) return;
-                gameClicked = true;
+            let gameClicked = false;
+        icon.addEventListener("click", () => {
+            if (gameClicked) return; gameClicked = true;
+            clicked = true;
+                if (icon.classList.contains("clicked")) return;
                 icon.classList.add("clicked");
                 img.classList.add("explosion");
                 setTimeout(() => { icon.style.display = "none"; }, 800);
-
                 const prizePool = [
-                    { name: "特賞 VIPルームサービス＆次回本指名セット料金無料♡", chance: 0.01 },
-                    { name: "1等 VIPルームサービス♡", chance: 0.2 },
-                    { name: "2等 お会計1000円OFF♡", chance: 2 },
-                    { name: "3等 お会計500円OFF♡", chance: 30 },
-                    { name: "4等 次回本指名料無料♡", chance: 50 },
-                    { name: "5等 切り餅プレゼント♡", chance: 60 }
-                ];
+    { name: "特賞 VIPルームサービス＆次回本指名セット料金無料♡", chance: 0.01 },
+    { name: "1等 VIPルームサービス♡", chance: 0.2 },
+    { name: "2等 お会計1000円OFF♡", chance: 2 },
+    { name: "3等 お会計500円OFF♡", chance: 30 },
+    { name: "4等 次回本指名料無料♡", chance: 50 },
+    { name: "5等 切り餅プレゼント♡", chance: 60 }
+];
 
-                function getRandomPrize() {
-                    let totalChance = prizePool.reduce((sum, prize) => sum + prize.chance, 0);
-                    let rand = Math.random() * totalChance;
-                    let cumulative = 0;
-                    for (let
-::contentReference[oaicite:4]{index=4}
- 
+function getRandomPrize() {
+    let totalChance = prizePool.reduce((sum, prize) => sum + prize.chance, 0);
+    let rand = Math.random() * totalChance;
+    let cumulative = 0;
+    for (let prize of prizePool) {
+        cumulative += prize.chance;
+        if (rand <= cumulative) {
+            return prize.name;
+        }
+    }
+    return prizePool[prizePool.length - 1].name;
+}
+
+const resultText = getRandomPrize();
+    document.getElementById("instruction").textContent = "あなたの結果: " + resultText;
+    
+    if (resultText.includes("特賞") || resultText.includes("1等") || resultText.includes("4等")) {
+        const couponCode = Math.floor(Math.random() * 900 + 100);
+        const couponText = `次回使えるクーポン♡ フロントでご提示ください: ${couponCode}`;
+        
+        let couponDiv = document.createElement("div");
+        couponDiv.textContent = couponText;
+        couponDiv.style.fontSize = "1.2rem";
+        couponDiv.style.color = "#ff1493";
+        couponDiv.style.marginTop = "10px";
+        document.body.appendChild(couponDiv);
+    }
+            });
+        });
+    </script>
+</body>
+</html>
