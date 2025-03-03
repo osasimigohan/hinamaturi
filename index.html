@@ -6,7 +6,7 @@
     <title>ナースモードひな祭りおみくじ</title>
     <style>
         body {
-    aspect-ratio: 9 / 16;
+            aspect-ratio: 9 / 16;
             font-family: 'Arial', sans-serif;
             text-align: center;
             margin: 0;
@@ -30,64 +30,23 @@
         .icon-container {
             position: relative;
             width: 100vw;
-            height: 50vh; /* 上の50%に配置 */
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
+            height: 50vh;
         }
         .icon {
             width: 100px;
             height: 100px;
             position: absolute;
-            animation: sway 2s infinite ease-in-out;
+            animation: sway 2s infinite ease-in-out, float 3s infinite alternate ease-in-out;
             cursor: pointer;
             background: #fff;
             border-radius: 50%;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .icon:hover {
-            transform: scale(1.1);
-            box-shadow: 4px 4px 10px rgba(255, 105, 180, 0.5);
-        }
-        .icon img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            box-shadow: none;
-            transition: transform 0.3s ease;
-        }
-        .icon img:active {
-            transform: scale(1.2);
-        }
-        .hidden {
-            display: none;
-        }
-        .result {
-            font-size: 1.5rem;
-            color: #ff1493;
-            margin-top: 10px;
-            position: absolute;
-            top: 10vh; /* 画面の上の方に賞を表示 */
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            text-align: center;
-        }
-        .coupon {
-            font-size: 1rem;
-            color: #ff69b4;
-            margin-top: 10px;
-        }
-        .expires {
-            font-size: 0.9rem;
-            color: #ff99cc;
-        }
         @keyframes sway {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+            0% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); }
+            100% { transform: translateX(-10px); }
         }
         @keyframes explode {
             0% { opacity: 1; transform: scale(1); filter: brightness(1); }
@@ -97,6 +56,16 @@
         .explosion {
             animation: explode 0.8s forwards ease-out;
         }
+        .prize-list {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 228, 225, 0.9);
+            padding: 10px;
+            border-top: 2px solid #ff69b4;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -104,26 +73,18 @@
     <h2 id="instruction">タップ！</h2>
     <div class="icon-container" id="iconContainer"></div>
     <div id="result" class="result"></div>
-    <div id="coupon" class="coupon hidden"></div>
-    <div id="expires" class="expires hidden"></div>
-     <div id="prizes">
-    <p>賞一覧</p>
-    <ul>
-      <li>特賞 VIPルームサービス＆次回本指名セット料金無料♡</li>
-      <li>1等 VIPルームサービス♡</li>
-      <li>2等 お会計1000円OFF♡</li>
-      <li>3等 お会計500円OFF♡</li>
-      <li>4等 次回本指名料無料♡</li>
-      <li>5等 切り餅プレゼント♡</li>
-    </ul>
-     </div>
-    
+    <div id="prizes" class="prize-list">
+        <h3>賞一覧</h3>
+        <ul>
+            <li>特賞 VIPルームサービス＆次回本指名セット料金無料♡</li>
+            <li>1等 VIPルームサービス♡</li>
+            <li>2等 お会計1000円OFF♡</li>
+            <li>3等 お会計500円OFF♡</li>
+            <li>4等 次回本指名料無料♡</li>
+            <li>5等 切り餅プレゼント♡</li>
+        </ul>
+    </div>
     <script>
-        document.querySelectorAll(".icon").forEach(icon => {
-            icon.addEventListener("click", () => {
-                if (clicked) return; // 既にタップ済みの場合は何もしない
-                clicked = true;
-                
         const allIcons = [
             "ohinasama.png", "goninbayashi2.png", "sanninkanjyo3.png", "sanninkanjyo2.png",
             "sanninkanjyo1.png", "odairisama.png", "sakuramochi.png", "hishimochi.png",
@@ -141,8 +102,8 @@
         selectedIcons.forEach(iconSrc => {
             let icon = document.createElement("div");
             icon.classList.add("icon");
-            icon.style.left = Math.random() * 80 + "vw";
-            icon.style.top = (Math.random() * 10 + 10) + "vh";
+            icon.style.left = Math.random() * 60 + 20 + "vw";
+            icon.style.top = (Math.random() * 20 + 20) + "vh";
             let img = document.createElement("img");
             img.src = iconSrc;
             icon.appendChild(img);
@@ -153,7 +114,6 @@
                 icon.classList.add("clicked");
                 img.classList.add("explosion");
                 setTimeout(() => { icon.style.display = "none"; }, 800);
-                
                 document.getElementById("result").textContent = "あなたの結果: " + iconSrc;
             });
         });
