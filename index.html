@@ -119,9 +119,9 @@
             icon.appendChild(img);
             iconContainer.appendChild(icon);
 
-            let gameClicked = false;
+            let gameClicked = false; let prizeSelected = false;
         icon.addEventListener("click", () => {
-            if (gameClicked) return; gameClicked = true;
+            if (gameClicked || prizeSelected) return; gameClicked = true; prizeSelected = true;
             clicked = true;
                 if (icon.classList.contains("clicked")) return;
                 icon.classList.add("clicked");
