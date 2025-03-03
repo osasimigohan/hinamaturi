@@ -1,112 +1,146 @@
-body {
-    font-family: 'Arial', sans-serif;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(to bottom, #ffe4e1, #ffccd5);
-    color: #ff69b4;
-}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ナースモードひな祭りおみくじ</title>
+    <style>
+        body {
+            aspect-ratio: 9 / 16;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #ffe4e1, #ffccd5);
+            color: #ff69b4;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        h1 {
+            font-size: 2rem;
+            margin: 10px 0;
+            color: #ff1493;
+        }
+        h2 {
+            font-size: 1.2rem;
+            margin: 0 0 15px;
+            color: #ff69b4;
+        }
+        .icon-container {
+            position: relative;
+            width: 100vw;
+            height: 60vh;
+        }
+        .icon {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            animation: sway 2s infinite ease-in-out, float 3s infinite alternate ease-in-out;
+            cursor: pointer;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        @keyframes sway {
+            0% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); }
+            100% { transform: translateX(-10px); }
+        }
+        @keyframes explode {
+            0% { opacity: 1; transform: scale(1); filter: brightness(1); }
+            50% { opacity: 0.7; transform: scale(1.8); filter: brightness(1.8); }
+            100% { opacity: 0; transform: scale(3); filter: brightness(2); }
+        }
+        .explosion {
+            animation: explode 0.8s forwards ease-out;
+        }
+        .prize-list {
+            position: fixed;
+            max-height: 20vh;
+            overflow-y: auto;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 228, 225, 0.9);
+            padding: 10px;
+            border-top: 2px solid #ff69b4;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>ナースモードひな祭りおみくじ</h1>
+    <h2 id="instruction">タップ！</h2>
+    <div class="icon-container" id="iconContainer"></div>
+    <div id="result" class="result"></div>
+    <div id="prizes" class="prize-list">
+        <h3>賞一覧</h3>
+        <ul>
+            <li>特賞 VIPルームサービス＆次回本指名セット料金無料♡</li>
+            <li>1等 VIPルームサービス♡</li>
+            <li>2等 お会計1000円OFF♡</li>
+            <li>3等 お会計500円OFF♡</li>
+            <li>4等 次回本指名料無料♡</li>
+            <li>5等 切り餅プレゼント♡</li>
+        </ul>
+    </div>
+    <script>
+        const allIcons = [
+            "ohinasama.png", "goninbayashi2.png", "sanninkanjyo3.png", "sanninkanjyo2.png",
+            "sanninkanjyo1.png", "odairisama.png", "sakuramochi.png", "hishimochi.png",
+            "goninbayashi1.png", "goninbayashi3.png", "goninbayashi5.png"
+        ];
+        const selectedIcons = [];
+        while (selectedIcons.length < 6) {
+            let randomIcon = allIcons[Math.floor(Math.random() * allIcons.length)];
+            if (!selectedIcons.includes(randomIcon)) {
+                selectedIcons.push(randomIcon);
+            }
+        }
+        
+        const iconContainer = document.getElementById("iconContainer");
+        selectedIcons.forEach(iconSrc => {
+            let icon = document.createElement("div");
+            icon.classList.add("icon");
+            icon.style.left = (Math.random() * 50 + 25) + "vw";
+            icon.style.top = (Math.random() * 30 + 10) + "vh";
+            let img = document.createElement("img");
+            img.src = iconSrc;
+            icon.appendChild(img);
+            iconContainer.appendChild(icon);
 
-h1 {
-    font-size: 2rem; /* スマホ向けに少し小さめ */
-    margin: 10px 0;
-    color: #ff1493;
-}
+            icon.addEventListener("click", () => {
+                if (icon.classList.contains("clicked")) return;
+                icon.classList.add("clicked");
+                img.classList.add("explosion");
+                setTimeout(() => { icon.style.display = "none"; }, 800);
+                const prizePool = [
+    { name: "特賞 VIPルームサービス＆次回本指名セット料金無料♡", chance: 0.01 },
+    { name: "1等 VIPルームサービス♡", chance: 0.2 },
+    { name: "2等 お会計1000円OFF♡", chance: 2 },
+    { name: "3等 お会計500円OFF♡", chance: 30 },
+    { name: "4等 次回本指名料無料♡", chance: 50 },
+    { name: "5等 切り餅プレゼント♡", chance: 60 }
+];
 
-h2 {
-    font-size: 1.2rem;
-    margin: 0 0 15px;
-    color: #ff69b4;
-}
-
-.icon-container {
-    display: grid;
-    grid-template-columns: 1fr; /* 1列に配置 */
-    gap: 20px;
-    max-width: 300px; /* コンテンツを中央に寄せる */
-    margin: 0 auto;
-}
-
-.icon {
-    width: 100px; /* スマホ向けに小さめ */
-    height: 100px;
-    position: relative;
-    animation: sway 2s infinite ease-in-out;
-    cursor: pointer;
-}
-
-.icon img {
-    width: 100%;
-    height: 100%;
-    border-radius: 0;
-    box-shadow: none;
-    transition: transform 0.3s ease;
-}
-
-.icon img:active {
-    transform: scale(1.2);
-}
-
-.hidden {
-    display: none;
-}
-
-.result {
-    font-size: 1.2rem;
-    color: #ff69b4;
-    margin-top: 20px;
-}
-
-.coupon {
-    font-size: 1rem;
-    color: #ff69b4;
-    margin-top: 10px;
-}
-
-.expires {
-    font-size: 0.9rem;
-    color: #ff99cc;
-}
-
-/* 背景の調整 */
-.background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background-image: url('https://www.svgrepo.com/show/276990/sakura-blossom.svg');
-    background-size: cover;
-    opacity: 0.2;
-}
-
-/* 縦画面対応 */
-@media screen and (max-width: 768px) {
-    h1 {
-        font-size: 1.8rem;
+function getRandomPrize() {
+    let totalChance = prizePool.reduce((sum, prize) => sum + prize.chance, 0);
+    let rand = Math.random() * totalChance;
+    let cumulative = 0;
+    for (let prize of prizePool) {
+        cumulative += prize.chance;
+        if (rand <= cumulative) {
+            return prize.name;
+        }
     }
-
-    .icon-container {
-        grid-template-columns: 1fr; /* 縦1列 */
-        grid-auto-rows: auto;
-    }
-
-    .icon {
-        width: 80px; /* スマホ向けにさらに小さく */
-        height: 80px;
-    }
-
-    .result {
-        font-size: 1rem;
-    }
-
-    .coupon {
-        font-size: 0.9rem;
-    }
-
-    .expires {
-        font-size: 0.8rem;
-    }
+    return prizePool[prizePool.length - 1].name;
 }
 
+document.getElementById("result").textContent = "あなたの結果: " + getRandomPrize();
+            });
+        });
+    </script>
+</body>
+</html>
