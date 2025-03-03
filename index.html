@@ -111,9 +111,9 @@
             icon.appendChild(img);
             iconContainer.appendChild(icon);
 
-            let clicked = false;
+            let gameClicked = false;
         icon.addEventListener("click", () => {
-            if (clicked) return;
+            if (gameClicked) return; gameClicked = true;
             clicked = true;
                 if (icon.classList.contains("clicked")) return;
                 icon.classList.add("clicked");
@@ -141,9 +141,10 @@ function getRandomPrize() {
     return prizePool[prizePool.length - 1].name;
 }
 
-document.getElementById("result").textContent = "あなたの結果: " + getRandomPrize();
+document.getElementById("instruction").textContent = "あなたの結果: " + getRandomPrize();
             });
         });
     </script>
 </body>
 </html>
+
