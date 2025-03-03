@@ -17,19 +17,23 @@
             position: relative;
         }
         h1 {
-            font-size: 2.5rem;
-            margin: 20px 0 10px;
+            font-size: 2rem;
+            margin: 10px 0;
             color: #ff1493;
         }
         h2 {
-            font-size: 1.5rem;
-            margin: 0 0 20px;
+            font-size: 1.2rem;
+            margin: 0 0 15px;
             color: #ff69b4;
         }
         .icon-container {
             position: relative;
             width: 100vw;
-            height: 60vh;
+            height: 50vh; /* 上の50%に配置 */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
         }
         .icon {
             width: 100px;
@@ -59,6 +63,26 @@
         .hidden {
             display: none;
         }
+        .result {
+            font-size: 1.5rem;
+            color: #ff1493;
+            margin-top: 10px;
+            position: absolute;
+            top: 10vh; /* 画面の上の方に賞を表示 */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            text-align: center;
+        }
+        .coupon {
+            font-size: 1rem;
+            color: #ff69b4;
+            margin-top: 10px;
+        }
+        .expires {
+            font-size: 0.9rem;
+            color: #ff99cc;
+        }
         @keyframes sway {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
@@ -66,7 +90,7 @@
         }
         @keyframes explode {
             0% { opacity: 1; transform: scale(1); filter: brightness(1); }
-            50% { opacity: 0.7; transform: scale(1.5); filter: brightness(1.5); }
+            50% { opacity: 0.7; transform: scale(1.8); filter: brightness(1.8); }
             100% { opacity: 0; transform: scale(3); filter: brightness(2); }
         }
         .explosion {
@@ -96,35 +120,12 @@
             }
         }
         
-        const prizes = [
-            { name: "特賞！VIPルームサービス&次回本指名セット無料", chance: 0.3 },
-            { name: "一等賞！豪華ディナーコース無料券", chance: 0.5 },
-            { name: "二等賞！お好きなドリンク無料", chance: 1 },
-            { name: "三等賞！次回10%オフ券", chance: 20 },
-            { name: "四等賞！オリジナルグッズプレゼント", chance: 65 },
-            { name: "五等賞！もう一回挑戦！", chance: 70 }
-        ];
-
-        function getRandomPrize() {
-            const total = prizes.reduce((sum, prize) => sum + prize.chance, 0);
-            const rand = Math.random() * total;
-            let cumulative = 0;
-
-            for (const prize of prizes) {
-                cumulative += prize.chance;
-                if (rand <= cumulative) {
-                    return prize;
-                }
-            }
-            return prizes[prizes.length - 1];
-        }
-        
         const iconContainer = document.getElementById("iconContainer");
         selectedIcons.forEach(iconSrc => {
             let icon = document.createElement("div");
             icon.classList.add("icon");
             icon.style.left = Math.random() * 80 + "vw";
-            icon.style.top = (Math.random() * 30 + 30) + "vh";
+            icon.style.top = (Math.random() * 20 + 10) + "vh"; /* アイコンの位置を上げる */
             let img = document.createElement("img");
             img.src = iconSrc;
             icon.appendChild(img);
@@ -136,8 +137,7 @@
                 img.classList.add("explosion");
                 setTimeout(() => { icon.style.display = "none"; }, 800);
                 
-                let prize = getRandomPrize();
-                document.getElementById("result").textContent = `あなたの結果: ${prize.name}`;
+                document.getElementById("result").textContent = "あなたの結果: " + iconSrc;
             });
         });
     </script>
