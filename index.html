@@ -96,6 +96,29 @@
             }
         }
         
+        const prizes = [
+            { name: "特賞！VIPルームサービス&次回本指名セット無料", chance: 0.3 },
+            { name: "一等賞！豪華ディナーコース無料券", chance: 0.5 },
+            { name: "二等賞！お好きなドリンク無料", chance: 1 },
+            { name: "三等賞！次回10%オフ券", chance: 20 },
+            { name: "四等賞！オリジナルグッズプレゼント", chance: 65 },
+            { name: "五等賞！もう一回挑戦！", chance: 70 }
+        ];
+
+        function getRandomPrize() {
+            const total = prizes.reduce((sum, prize) => sum + prize.chance, 0);
+            const rand = Math.random() * total;
+            let cumulative = 0;
+
+            for (const prize of prizes) {
+                cumulative += prize.chance;
+                if (rand <= cumulative) {
+                    return prize;
+                }
+            }
+            return prizes[prizes.length - 1];
+        }
+        
         const iconContainer = document.getElementById("iconContainer");
         selectedIcons.forEach(iconSrc => {
             let icon = document.createElement("div");
@@ -106,12 +129,15 @@
             img.src = iconSrc;
             icon.appendChild(img);
             iconContainer.appendChild(icon);
-        });
 
-        document.querySelectorAll(".icon").forEach(icon => {
             icon.addEventListener("click", () => {
-                icon.querySelector("img").classList.add("explosion");
+                if (icon.classList.contains("clicked")) return;
+                icon.classList.add("clicked");
+                img.classList.add("explosion");
                 setTimeout(() => { icon.style.display = "none"; }, 800);
+                
+                let prize = getRandomPrize();
+                document.getElementById("result").textContent = `あなたの結果: ${prize.name}`;
             });
         });
     </script>
