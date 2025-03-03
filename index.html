@@ -107,6 +107,11 @@
     <div id="expires" class="expires hidden"></div>
 
     <script>
+        document.querySelectorAll(".icon").forEach(icon => {
+            icon.addEventListener("click", () => {
+                if (clicked) return; // 既にタップ済みの場合は何もしない
+                clicked = true;
+                
         const allIcons = [
             "icon1.png", "icon2.png", "icon3.png", "icon4.png",
             "icon5.png", "icon6.png", "icon7.png", "icon8.png",
