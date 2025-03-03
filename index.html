@@ -125,9 +125,9 @@
                 clicked = true;
                 
         const allIcons = [
-            "ohinasama.png", "goninbayashi2.png", "icon3.png", "icon4.png",
-            "icon5.png", "icon6.png", "icon7.png", "icon8.png",
-            "icon9.png", "icon10.png", "icon11.png", "icon12.png"
+            "ohinasama.png", "goninbayashi2.png", "sanninkanjyo3.png", "sanninkanjyo2.png",
+            "sanninkanjyo1.png", "odairisama.png", "sakuramochi.png", "hishimochi.png",
+            "goninbayashi1.png", "goninbayashi3.png", "goninbayashi5.png"
         ];
         const selectedIcons = [];
         while (selectedIcons.length < 6) {
@@ -142,7 +142,7 @@
             let icon = document.createElement("div");
             icon.classList.add("icon");
             icon.style.left = Math.random() * 80 + "vw";
-            icon.style.top = (Math.random() * 20 + 10) + "vh"; /* アイコンの位置を上げる */
+            icon.style.top = (Math.random() * 10 + 10) + "vh";
             let img = document.createElement("img");
             img.src = iconSrc;
             icon.appendChild(img);
