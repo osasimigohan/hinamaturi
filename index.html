@@ -141,10 +141,22 @@ function getRandomPrize() {
     return prizePool[prizePool.length - 1].name;
 }
 
-document.getElementById("instruction").textContent = "あなたの結果: " + getRandomPrize();
+const resultText = getRandomPrize();
+    document.getElementById("instruction").textContent = "あなたの結果: " + resultText;
+    
+    if (resultText.includes("特賞") || resultText.includes("1等") || resultText.includes("4等")) {
+        const couponCode = Math.floor(Math.random() * 900 + 100);
+        const couponText = `次回使えるクーポン♡ フロントでご提示ください: ${couponCode}`;
+        
+        let couponDiv = document.createElement("div");
+        couponDiv.textContent = couponText;
+        couponDiv.style.fontSize = "1.2rem";
+        couponDiv.style.color = "#ff1493";
+        couponDiv.style.marginTop = "10px";
+        document.body.appendChild(couponDiv);
+    }
             });
         });
     </script>
 </body>
 </html>
-
