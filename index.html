@@ -29,7 +29,7 @@
         .icon-container {
             position: relative;
             width: 100vw;
-            height: 80vh;
+            height: 60vh;
         }
         .icon {
             width: 100px;
@@ -101,7 +101,7 @@
             let icon = document.createElement("div");
             icon.classList.add("icon");
             icon.style.left = Math.random() * 80 + "vw";
-            icon.style.top = Math.random() * 70 + "vh";
+            icon.style.top = (Math.random() * 40 + 50) + "vh";
             let img = document.createElement("img");
             img.src = iconSrc;
             icon.appendChild(img);
