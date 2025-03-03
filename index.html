@@ -83,7 +83,7 @@
             <li>2等 お会計1000円OFF♡</li>
             <li>3等 イエーガーサービス♡</li>
             <li>4等 次回本指名料無料♡</li>
-            <li>5等 ひなあられプレゼント♡</li>
+            <li>5等 大人の♡ひなあられプレゼント♡</li>
         </ul>
     </div>
     <script>
@@ -133,7 +133,7 @@
     { name: "2等 お会計1000円OFF♡", chance: 0.2 },
     { name: "3等 イエーガーサービス♡", chance: 30 },
     { name: "4等 次回本指名料無料♡", chance: 50 },
-    { name: "5等 ひなあられプレゼント♡", chance: 60 }
+    { name: "5等 大人の♡ひなあられプレゼント♡", chance: 60 }
 ];
 
 function getRandomPrize() {
@@ -154,7 +154,7 @@ const resultText = getRandomPrize();
     
     if (resultText.includes("特賞") || resultText.includes("1等") || resultText.includes("4等")) {
         const couponCode = Math.floor(Math.random() * 900 + 100);
-        const couponText = `次回使えるクーポン♡クーポンコード: ${couponCode}<br>クーポンコードをフロントにてご提示ください。<br>有効期限　5/1AM5:00まで♡`;
+        const couponText = `次回使えるクーポン♡クーポンコード: ${couponCode}　クーポンをフロントにてご提示ください。<br>有効期限　5/1AM5:00まで♡`;
         
         let couponDiv = document.createElement("div");
         couponDiv.textContent = couponText;
