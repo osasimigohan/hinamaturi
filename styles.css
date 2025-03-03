@@ -23,17 +23,16 @@ h2 {
 
 .icon-container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    max-width: 400px; /* 中央寄せ */
-    margin: 20px auto;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* 各段の間隔 */
+    margin-top: 20px;
 }
 
 .icon-container .row {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 15px; /* アイコン同士の間隔 */
 }
 
 .icon {
@@ -43,14 +42,14 @@ h2 {
     animation: sway 2s infinite ease-in-out;
     cursor: pointer;
     background: #fff;
-    border-radius: 50%; /* 丸くしてかわいらしく */
+    border-radius: 50%; /* 丸みを追加 */
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .icon:hover {
     transform: scale(1.1);
-    box-shadow: 4px 4px 10px rgba(255, 105, 180, 0.5); /* 可愛らしいエフェクト */
+    box-shadow: 4px 4px 10px rgba(255, 105, 180, 0.5); /* ホバー時のエフェクト */
 }
 
 .icon img {
@@ -58,7 +57,7 @@ h2 {
     height: 70%;
     margin: auto;
     display: block;
-    border-radius: 50%; /* 丸く */
+    border-radius: 50%; /* アイコンの丸みを維持 */
     box-shadow: none;
     transition: transform 0.3s ease;
 }
@@ -66,6 +65,7 @@ h2 {
 .icon img:active {
     transform: scale(1.2);
 }
+
 
 .hidden {
     display: none;
