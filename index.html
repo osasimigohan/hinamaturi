@@ -30,7 +30,7 @@
         .icon-container {
             position: relative;
             width: 100vw;
-            height: 50vh;
+            height: 60vh;
         }
         .icon {
             width: 100px;
@@ -58,6 +58,8 @@
         }
         .prize-list {
             position: fixed;
+            max-height: 20vh;
+            overflow-y: auto;
             bottom: 0;
             left: 0;
             width: 100%;
@@ -102,8 +104,8 @@
         selectedIcons.forEach(iconSrc => {
             let icon = document.createElement("div");
             icon.classList.add("icon");
-            icon.style.left = Math.random() * 60 + 20 + "vw";
-            icon.style.top = (Math.random() * 20 + 20) + "vh";
+            icon.style.left = (Math.random() * 50 + 25) + "vw";
+            icon.style.top = (Math.random() * 30 + 10) + "vh";
             let img = document.createElement("img");
             img.src = iconSrc;
             icon.appendChild(img);
@@ -114,7 +116,29 @@
                 icon.classList.add("clicked");
                 img.classList.add("explosion");
                 setTimeout(() => { icon.style.display = "none"; }, 800);
-                document.getElementById("result").textContent = "あなたの結果: " + iconSrc;
+                const prizePool = [
+    { name: "特賞 VIPルームサービス＆次回本指名セット料金無料♡", chance: 0.01 },
+    { name: "1等 VIPルームサービス♡", chance: 0.2 },
+    { name: "2等 お会計1000円OFF♡", chance: 2 },
+    { name: "3等 お会計500円OFF♡", chance: 30 },
+    { name: "4等 次回本指名料無料♡", chance: 50 },
+    { name: "5等 切り餅プレゼント♡", chance: 60 }
+];
+
+function getRandomPrize() {
+    let totalChance = prizePool.reduce((sum, prize) => sum + prize.chance, 0);
+    let rand = Math.random() * totalChance;
+    let cumulative = 0;
+    for (let prize of prizePool) {
+        cumulative += prize.chance;
+        if (rand <= cumulative) {
+            return prize.name;
+        }
+    }
+    return prizePool[prizePool.length - 1].name;
+}
+
+document.getElementById("result").textContent = "あなたの結果: " + getRandomPrize();
             });
         });
     </script>
