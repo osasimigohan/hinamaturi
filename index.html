@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ナースモードひな祭りおみくじ</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #ffe4e1, #ffccd5);
+            color: #ff69b4;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin: 20px 0 10px;
+            color: #ff1493;
+        }
+        h2 {
+            font-size: 1.5rem;
+            margin: 0 0 20px;
+            color: #ff69b4;
+        }
+        .icon-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .icon {
+            width: 120px;
+            height: 120px;
+            position: relative;
+            animation: sway 2s infinite ease-in-out;
+            cursor: pointer;
+        }
+        .icon img {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+        .icon img:active {
+            transform: scale(1.2);
+        }
+        .hidden {
+            display: none;
+        }
+        @keyframes sway {
+            0% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+            100% { transform: rotate(-5deg); }
+        }
+        @keyframes explode {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(2); }
+        }
+        .explosion {
+            animation: explode 0.5s forwards;
+        }
+        .result {
+            font-size: 1.5rem;
+            color: #ff69b4;
+            margin-top: 20px;
+        }
+        .coupon {
+            font-size: 1.2rem;
+            color: #ff69b4;
+            margin-top: 10px;
+        }
+        .expires {
+            font-size: 1rem;
+            color: #ff99cc;
+        }
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: url('https://www.svgrepo.com/show/276990/sakura-blossom.svg');
+            background-size: cover;
+            opacity: 0.2;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <h1>ナースモードひな祭りおみくじ</h1>
+    <h2 id="instruction">タップ！</h2>
+    <div class="icon-container">
+        <div class="icon"><img src="sakuramochi.png" alt="アイコン1"></div>
+        <div class="icon"><img src="ohinasama.png" alt="アイコン2"></div>
+        <div class="icon"><img src="Untitled93_20250302091500.png" alt="アイコン3"></div>
+        <div class="icon"><img src="Untitled93_20250302091530.png" alt="アイコン4"></div>
+        <div class="icon"><img src="Untitled93_20250302091519.png" alt="アイコン5"></div>
+        <div class="icon"><img src="Untitled93_20250302091500.png" alt="アイコン6"></div>
+    </div>
+    <div id="result" class="result"></div>
+    <div id="coupon" class="coupon hidden"></div>
+    <div id="expires" class="expires hidden"></div>
+
+    <script>
+        const prizes = [
+            { name: "特賞！VIPルームサービス&次回本指名セット無料", chance: 0.3 },
+            { name: "一等賞！豪華ディナーコース無料券", chance: 0.5 },
+            { name: "二等賞！お好きなドリンク無料", chance: 1 },
+            { name: "三等賞！次回10%オフ券", chance: 20 },
+            { name: "四等賞！オリジナルグッズプレゼント", chance: 65 },
+            { name: "五等賞！もう一回挑戦！", chance: 70 }
+        ];
+
+        const instruction = document.getElementById("instruction");
+        const resultDiv = document.getElementById("result");
+        const couponDiv = document.getElementById("coupon");
+        const expiresDiv = document.getElementById("expires");
+
+        let clicked = false;
+
+        // 景品をランダムに選ぶ関数
+        function getRandomPrize() {
+            const total = prizes.reduce((sum, prize) => sum + prize.chance, 0);
+            const rand = Math.random() * total;
+            let cumulative = 0;
+
+            for (const prize of prizes) {
+                cumulative += prize.chance;
+                if (rand <= cumulative) {
+                    return prize;
+                }
+            }
+            return prizes[prizes.length - 1]; // 最後の景品を返す
+        }
+
+        // タップ時の動作
+        document.querySelectorAll(".icon").forEach(icon => {
+            icon.addEventListener("click", () => {
+                if (clicked) return; // 既にタップ済みの場合は何もしない
+                clicked = true;
+
+                // 爆発アニメーション
+                const img = icon.querySelector("img");
+                img.classList.add("explosion");
+
+                // 「タップ！」を非表示
+                instruction.classList.add("hidden");
+
+                // 景品を取得
+                const prize = getRandomPrize();
+                setTimeout(() => {
+                    img.style.display = "none"; // アイコンを非表示
+                    resultDiv.textContent = prize.name;
+
+                    // 特賞、一等、四等の場合はクーポンコードと有効期限を表示
+                    if (["特賞！VIPルームサービス&次回本指名セット無料", "一等賞！豪華ディナーコース無料券", "四等賞！オリジナルグッズプレゼント"].includes(prize.name)) {
+                        const couponCode = Math.floor(Math.random() * 900 + 100); // 3桁のランダムな数字
+                        couponDiv.textContent = `クーポンコード: ${couponCode}`;
+                        couponDiv.classList.remove("hidden");
+
+                        expiresDiv.textContent = "有効期限: 2025年5月1日 AM5:00まで";
+                        expiresDiv.classList.remove("hidden");
+                    }
+                }, 500);
+            });
+        });
+    </script>
+</body>
+</html>

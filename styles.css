@@ -1,0 +1,111 @@
+body {
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to bottom, #ffe4e1, #ffccd5);
+  color: #ff69b4;
+}
+
+h1 {
+  font-size: 2rem; /* スマホ向けに少し小さめ */
+  margin: 10px 0;
+  color: #ff1493;
+}
+
+h2 {
+  font-size: 1.2rem;
+  margin: 0 0 15px;
+  color: #ff69b4;
+}
+
+.icon-container {
+  display: grid;
+  grid-template-columns: 1fr; /* 1列に配置 */
+  gap: 20px;
+  max-width: 300px; /* コンテンツを中央に寄せる */
+  margin: 0 auto;
+}
+
+.icon {
+  width: 100px; /* スマホ向けに小さめ */
+  height: 100px;
+  position: relative;
+  animation: sway 2s infinite ease-in-out;
+  cursor: pointer;
+}
+
+.icon img {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  box-shadow: none;
+  transition: transform 0.3s ease;
+}
+
+.icon img:active {
+  transform: scale(1.2);
+}
+
+.hidden {
+  display: none;
+}
+
+.result {
+  font-size: 1.2rem;
+  color: #ff69b4;
+  margin-top: 20px;
+}
+
+.coupon {
+  font-size: 1rem;
+  color: #ff69b4;
+  margin-top: 10px;
+}
+
+.expires {
+  font-size: 0.9rem;
+  color: #ff99cc;
+}
+
+/* 背景の調整 */
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image: url('https://www.svgrepo.com/show/276990/sakura-blossom.svg');
+  background-size: cover;
+  opacity: 0.2;
+}
+
+/* 縦画面対応 */
+@media screen and (max-width: 768px) {
+  h1 {
+      font-size: 1.8rem;
+  }
+
+  .icon-container {
+      grid-template-columns: 1fr; /* 縦1列 */
+      grid-auto-rows: auto;
+  }
+
+  .icon {
+      width: 80px; /* スマホ向けにさらに小さく */
+      height: 80px;
+  }
+
+  .result {
+      font-size: 1rem;
+  }
+
+  .coupon {
+      font-size: 0.9rem;
+  }
+
+  .expires {
+      font-size: 0.8rem;
+  }
+}
