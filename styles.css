@@ -1,111 +1,133 @@
 body {
-  font-family: 'Arial', sans-serif;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(to bottom, #ffe4e1, #ffccd5);
-  color: #ff69b4;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #ffe4f3, #ffccd5); /* 明るい可愛い色合いに変更 */
+    color: #ff69b4;
 }
 
 h1 {
-  font-size: 2rem; /* スマホ向けに少し小さめ */
-  margin: 10px 0;
-  color: #ff1493;
+    font-size: 2.5rem;
+    margin: 10px 0;
+    color: #ff1493;
+    text-shadow: 2px 2px 3px rgba(255, 182, 193, 0.8); /* かわいい影を追加 */
 }
 
 h2 {
-  font-size: 1.2rem;
-  margin: 0 0 15px;
-  color: #ff69b4;
+    font-size: 1.5rem;
+    margin: 0 0 15px;
+    color: #ff69b4;
+    text-shadow: 1px 1px 2px rgba(255, 182, 193, 0.8);
 }
 
 .icon-container {
-  display: grid;
-  grid-template-columns: 1fr; /* 1列に配置 */
-  gap: 20px;
-  max-width: 300px; /* コンテンツを中央に寄せる */
-  margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 400px; /* 中央寄せ */
+    margin: 20px auto;
+}
+
+.icon-container .row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
 }
 
 .icon {
-  width: 100px; /* スマホ向けに小さめ */
-  height: 100px;
-  position: relative;
-  animation: sway 2s infinite ease-in-out;
-  cursor: pointer;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    animation: sway 2s infinite ease-in-out;
+    cursor: pointer;
+    background: #fff;
+    border-radius: 50%; /* 丸くしてかわいらしく */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.icon:hover {
+    transform: scale(1.1);
+    box-shadow: 4px 4px 10px rgba(255, 105, 180, 0.5); /* 可愛らしいエフェクト */
 }
 
 .icon img {
-  width: 100%;
-  height: 100%;
-  border-radius: 0;
-  box-shadow: none;
-  transition: transform 0.3s ease;
+    width: 70%;
+    height: 70%;
+    margin: auto;
+    display: block;
+    border-radius: 50%; /* 丸く */
+    box-shadow: none;
+    transition: transform 0.3s ease;
 }
 
 .icon img:active {
-  transform: scale(1.2);
+    transform: scale(1.2);
 }
 
 .hidden {
-  display: none;
+    display: none;
 }
 
 .result {
-  font-size: 1.2rem;
-  color: #ff69b4;
-  margin-top: 20px;
+    font-size: 1.5rem;
+    color: #ff69b4;
+    margin-top: 20px;
+    text-shadow: 1px 1px 2px rgba(255, 182, 193, 0.8);
 }
 
 .coupon {
-  font-size: 1rem;
-  color: #ff69b4;
-  margin-top: 10px;
+    font-size: 1.2rem;
+    color: #ff69b4;
+    margin-top: 10px;
 }
 
 .expires {
-  font-size: 0.9rem;
-  color: #ff99cc;
+    font-size: 1rem;
+    color: #ff99cc;
 }
 
-/* 背景の調整 */
+/* 背景の改良 */
 .background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  background-image: url('https://www.svgrepo.com/show/276990/sakura-blossom.svg');
-  background-size: cover;
-  opacity: 0.2;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-image: url('https://www.svgrepo.com/show/276990/sakura-blossom.svg');
+    background-size: 200px 200px;
+    background-repeat: repeat;
+    opacity: 0.3;
 }
 
-/* 縦画面対応 */
+/* レスポンシブデザイン */
 @media screen and (max-width: 768px) {
-  h1 {
-      font-size: 1.8rem;
-  }
+    .icon-container {
+        gap: 15px;
+    }
 
-  .icon-container {
-      grid-template-columns: 1fr; /* 縦1列 */
-      grid-auto-rows: auto;
-  }
+    .icon {
+        width: 80px;
+        height: 80px;
+    }
 
-  .icon {
-      width: 80px; /* スマホ向けにさらに小さく */
-      height: 80px;
-  }
+    .icon img {
+        width: 60%;
+        height: 60%;
+    }
 
-  .result {
-      font-size: 1rem;
-  }
+    h1 {
+        font-size: 2rem;
+    }
 
-  .coupon {
-      font-size: 0.9rem;
-  }
+    h2 {
+        font-size: 1.2rem;
+    }
 
-  .expires {
-      font-size: 0.8rem;
-  }
+    .result {
+        font-size: 1.2rem;
+    }
 }
