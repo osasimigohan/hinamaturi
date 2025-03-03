@@ -71,7 +71,7 @@
     </style>
 </head>
 <body>
-    <h1>ナースモードひな祭りおみくじ</h1>
+    <h1>ナースモード♡ひな祭りくじ</h1>
     <h2 id="instruction">タップ！</h2>
     <div class="icon-container" id="iconContainer"></div>
     <div id="result" class="result"></div>
@@ -154,7 +154,7 @@ const resultText = getRandomPrize();
     
     if (resultText.includes("特賞") || resultText.includes("1等") || resultText.includes("4等")) {
         const couponCode = Math.floor(Math.random() * 900 + 100);
-        const couponText = `次回使えるクーポン♡クーポンコード: ${couponCode}　クーポンをフロントにてご提示ください。<br>有効期限　5/1AM5:00まで♡`;
+        const couponText = `次回使えるクーポン♡クーポンコード: ${couponCode}　クーポンをフロントにてご提示ください。有効期限　5/1AM5:00まで♡`;
         
         let couponDiv = document.createElement("div");
         couponDiv.textContent = couponText;
