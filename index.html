@@ -100,13 +100,22 @@
         
         const iconContainer = document.getElementById("iconContainer");
         let prizeSelected = false;
+        const positions = [];
         selectedIcons.forEach(iconSrc => {
             let icon = document.createElement("div");
             icon.classList.add("icon");
             let img = document.createElement("img");
             img.src = iconSrc;
             icon.appendChild(img);
-            iconContainer.appendChild(icon);
+                    let left, top;
+        do {
+            left = Math.random() * 60 + 20;
+            top = Math.random() * 40 + 20;
+        } while (positions.some(pos => Math.abs(pos.left - left) < 12 && Math.abs(pos.top - top) < 12));
+        positions.push({ left, top });
+        icon.style.left = left + "vw";
+        icon.style.top = top + "vh";
+        iconContainer.appendChild(icon);
 
             icon.addEventListener("click", () => {
                 if (prizeSelected) return;
