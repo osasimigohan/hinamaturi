@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ナースモード♡ひな祭りくじ</title>
+    <title>ナースモード♡ひなまつりくじ</title>
     <style>
         body {
             aspect-ratio: 9 / 16;
@@ -40,7 +40,6 @@
             cursor: pointer;
             background: transparent;
             border-radius: 50%;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         @keyframes sway {
@@ -50,11 +49,11 @@
         }
         @keyframes explode {
             0% { opacity: 1; transform: scale(1); filter: brightness(1); }
-            50% { opacity: 0.7; transform: scale(1.8); filter: brightness(1.8); }
-            100% { opacity: 0; transform: scale(3); filter: brightness(2); }
+            50% { opacity: 0.5; transform: scale(2); filter: brightness(2); }
+            100% { opacity: 0; transform: scale(3); filter: brightness(3); }
         }
         .explosion {
-            animation: explode 0.8s forwards ease-out;
+            animation: explode 0.6s forwards ease-out;
         }
         .prize-list {
             position: fixed;
@@ -71,10 +70,9 @@
     </style>
 </head>
 <body>
-    <h1>ナースモード♡ひな祭りくじ</h1>
+    <h1 id="result">ナースモード♡<br>ひなまつりくじ</h1>
     <h2 id="instruction">タップ！</h2>
     <div class="icon-container" id="iconContainer"></div>
-    <div id="result" class="result"></div>
     <div id="prizes" class="prize-list">
         <h3>賞一覧</h3>
         <ul>
@@ -101,68 +99,50 @@
         }
         
         const iconContainer = document.getElementById("iconContainer");
-        const positions = [];
+        let prizeSelected = false;
         selectedIcons.forEach(iconSrc => {
             let icon = document.createElement("div");
             icon.classList.add("icon");
-            let left, top;
-        do {
-            left = Math.random() * 50 + 25;
-            top = Math.random() * 30 + 10;
-        } while (positions.some(pos => Math.abs(pos.left - left) < 10 && Math.abs(pos.top - top) < 10));
-        positions.push({ left, top });
-        icon.style.left = left + "vw";
-        icon.style.top = top + "vh";
-            icon.style.top = (Math.random() * 30 + 10) + "vh";
             let img = document.createElement("img");
             img.src = iconSrc;
             icon.appendChild(img);
             iconContainer.appendChild(icon);
 
-            let gameClicked = false; let prizeSelected = false;
-        icon.addEventListener("click", () => {
-            if (gameClicked || prizeSelected) return; gameClicked = true; prizeSelected = true;
-            clicked = true;
-                if (icon.classList.contains("clicked")) return;
-                icon.classList.add("clicked");
+            icon.addEventListener("click", () => {
+                if (prizeSelected) return;
+                prizeSelected = true;
                 img.classList.add("explosion");
-                setTimeout(() => { icon.style.display = "none"; }, 800);
+                setTimeout(() => { icon.style.display = "none"; }, 600);
+                
                 const prizePool = [
-    { name: "特賞 VIPルームサービス＆次回本指名セット料金無料♡", chance: 0.01 },
-    { name: "1等 VIPルームサービス♡", chance: 0.02 },
-    { name: "2等 お会計1000円OFF♡", chance: 0.2 },
-    { name: "3等 イエーガーサービス♡", chance: 30 },
-    { name: "4等 次回本指名料無料♡", chance: 50 },
-    { name: "5等 大人の♡ひなあられプレゼント♡", chance: 60 }
-];
-
-function getRandomPrize() {
-    let totalChance = prizePool.reduce((sum, prize) => sum + prize.chance, 0);
-    let rand = Math.random() * totalChance;
-    let cumulative = 0;
-    for (let prize of prizePool) {
-        cumulative += prize.chance;
-        if (rand <= cumulative) {
-            return prize.name;
-        }
-    }
-    return prizePool[prizePool.length - 1].name;
-}
-
-const resultText = getRandomPrize();
-    document.getElementById("instruction").textContent = resultText;
-    
-    if (resultText.includes("特賞") || resultText.includes("1等") || resultText.includes("4等")) {
-        const couponCode = Math.floor(Math.random() * 900 + 100);
-        const couponText = `次回使えるクーポン♡クーポンコード: ${couponCode}　クーポンをフロントにてご提示ください。有効期限　5/1AM5:00まで♡`;
-        
-        let couponDiv = document.createElement("div");
-        couponDiv.textContent = couponText;
-        couponDiv.style.fontSize = "1.2rem";
-        couponDiv.style.color = "#ff1493";
-        couponDiv.style.marginTop = "10px";
-        document.getElementById("instruction").appendChild(couponDiv);
-    }
+                    { name: "特賞 VIPルームサービス＆次回本指名セット料金無料♡", chance: 0.01 },
+                    { name: "1等 VIPルームサービス♡", chance: 0.02 },
+                    { name: "2等 お会計1000円OFF♡", chance: 0.2 },
+                    { name: "3等 イエーガーサービス♡", chance: 30 },
+                    { name: "4等 次回本指名料無料♡", chance: 50 },
+                    { name: "5等 大人の♡ひなあられプレゼント♡", chance: 60 }
+                ];
+                
+                function getRandomPrize() {
+                    let totalChance = prizePool.reduce((sum, prize) => sum + prize.chance, 0);
+                    let rand = Math.random() * totalChance;
+                    let cumulative = 0;
+                    for (let prize of prizePool) {
+                        cumulative += prize.chance;
+                        if (rand <= cumulative) {
+                            return prize.name;
+                        }
+                    }
+                    return prizePool[prizePool.length - 1].name;
+                }
+                
+                const resultText = getRandomPrize();
+                document.getElementById("result").innerHTML = resultText;
+                
+                if (resultText.includes("特賞") || resultText.includes("1等") || resultText.includes("4等")) {
+                    const couponCode = Math.floor(Math.random() * 900 + 100);
+                    document.getElementById("result").innerHTML += `<br>クーポンコード: ${couponCode}<br>クーポンをフロントにてご提示ください。<br>有効期限 5/1AM5:00まで♡`;
+                }
             });
         });
     </script>
