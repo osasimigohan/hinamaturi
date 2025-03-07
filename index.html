@@ -131,7 +131,7 @@
                     let left, top;
         do {
             left = Math.random() * 60 + 20;
-            top = Math.random() * 40 + 20;
+            top = Math.random() * 30 + 10;
         } while (positions.some(pos => Math.abs(pos.left - left) < 12 && Math.abs(pos.top - top) < 12));
         positions.push({ left, top });
         icon.style.left = left + "vw";
