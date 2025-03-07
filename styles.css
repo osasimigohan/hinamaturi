@@ -11,31 +11,31 @@
     height: 100vh;
     overflow: hidden;
     position: relative;
-}
+ }
 
-/* タイトル */
-h1 {
+ /* タイトル */
+ h1 {
     font-size: 2rem;
     margin: 10px 0;
     color: #ff1493;
-}
+ }
 
-/* タップの指示 */
-h2 {
+ /* タップの指示 */
+ h2 {
     font-size: 1.2rem;
     margin: 0 0 15px;
     color: #ff69b4;
-}
+ }
 
-/* アイコンコンテナ */
-.icon-container {
+ /* アイコンコンテナ */
+ .icon-container {
     position: relative;
     width: 100vw;
     height: 60vh;
-}
+ }
 
-/* アイコンのスタイル */
-.icon {
+ /* アイコンのスタイル */
+ .icon {
     width: 100px;
     height: 100px;
     position: absolute;
@@ -45,13 +45,13 @@ h2 {
     border-radius: 50%;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+ }
 
 /* アイコンのホバーエフェクト */
-.icon:hover {
+ .icon:hover {
     transform: scale(1.1);
     box-shadow: 4px 4px 10px rgba(255, 105, 180, 0.5);
-}
+ }
 
 /* アイコン画像 */
 .icon img {
