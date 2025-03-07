@@ -67,7 +67,23 @@
             border-top: 2px solid #ff69b4;
             text-align: center;
         }
-    </style>
+        @media screen and (max-width: 768px) {
+        h1 {
+            font-size: 1.8rem;
+        }
+        .icon-container {
+            height: 60vh;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+        .icon {
+            width: 80px;
+            height: 80px;
+        }
+    }
+</style>
 </head>
 <body>
     <h1 id="result">ナースモード♡<br>ひなまつりくじ</h1>
