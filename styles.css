@@ -1,6 +1,8 @@
-body {
+@import url('https://fonts.googleapis.com/earlyaccess/reepokakukana.css');
+
+ body {
     aspect-ratio: 9 / 16;
-    font-family: 'Arial', sans-serif;
+    font-family: 'ReePopKakuKana', sans-serif;
     text-align: center;
     margin: 0;
     padding: 0;
